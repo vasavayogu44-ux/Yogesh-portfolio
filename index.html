@@ -1,220 +1,88 @@
 <!DOCTYPE html>
-<!-- 
-  DOCTYPE tells the browser this is a modern HTML5 document.
-  Always put this as the very first line — it prevents the browser
-  from entering "quirks mode" (old, broken rendering).
--->
-
 <html lang="en">
-<!-- 
-  <html> is the root element that wraps everything.
-  lang="en" tells search engines and screen readers the page is in English.
--->
-
 <head>
-<!-- 
-  <head> contains metadata — info ABOUT the page, not visible content.
-  Nothing inside <head> is shown directly on screen.
--->
-
-  <meta charset="UTF-8">
-  <!-- 
-    charset="UTF-8" lets the browser display all characters correctly,
-    including special symbols, emojis, Indian language characters, etc.
-    Always include this — without it, text can appear as garbled symbols.
-  -->
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 
-    This is THE key line for mobile responsiveness.
-    - width=device-width : makes the page width match the phone's screen width
-    - initial-scale=1.0  : no zoom on first load
-    Without this, mobile browsers would show a shrunken desktop version.
-  -->
-
-  <title>Portfolio — Yogeshkumar Vasava</title>
-  <!-- 
-    The text shown on the browser tab and in Google search results.
-    TO CHANGE: just edit the text between the tags.
-  -->
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <!-- 
-    This loads 2 custom fonts from Google Fonts (free, hosted by Google):
-      - Playfair Display : the big elegant serif font used for headings
-      - DM Sans          : the clean modern font used for body text
-    The URL parameters request specific weights (400=normal, 700=bold, 900=black)
-    and styles (ital = italic version).
-    TO CHANGE FONT: Go to fonts.google.com, pick a font, copy its <link> tag here.
-  -->
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Yogeshkumar Vasava</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   CSS (Cascading Style Sheets) — controls all the visual design.
-   Everything inside <style>...</style> is CSS, not HTML.
-   CSS syntax:  selector { property: value; }
-   ============================================================ */
-
-  /* ── RESET & BOX MODEL ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  /*
-    * means "every element on the page".
-    ::before and ::after are pseudo-elements (decorative elements added via CSS).
 
-    box-sizing: border-box
-      By default, if you set width:200px and add padding:20px, the element
-      becomes 240px wide. border-box fixes this — padding is included INSIDE
-      the declared width. Makes layout math much easier.
-
-    margin: 0; padding: 0
-      Browsers add default spacing to elements (e.g. <h1> has top margin).
-      This "reset" removes all default spacing so we start from a clean slate.
-  */
-
-  /* ── CSS CUSTOM PROPERTIES (Variables) ── */
   :root {
-    --ink:    #111010;   /* Near-black — used for text and borders           */
-    --paper:  #F5F2EE;   /* Warm off-white — the main background color       */
-    --warm:   #E8E2D9;   /* Slightly darker warm tone — used for sections    */
-    --accent: #C8472B;   /* Burnt orange-red — highlights, hover effects     */
-    --muted:  #8A867F;   /* Medium grey — used for secondary/subtle text     */
-    --serif:  'Playfair Display', Georgia, serif;  /* Heading font stack      */
-    --sans:   'DM Sans', sans-serif;               /* Body font stack         */
+    --ink: #111010;
+    --paper: #F5F2EE;
+    --warm: #E8E2D9;
+    --accent: #C8472B;
+    --muted: #8A867F;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
   }
-  /*
-    :root refers to the <html> element — it's the highest level scope.
-    Variables declared here are available EVERYWHERE in the CSS.
-
-    USAGE: Instead of writing #C8472B every time, we write var(--accent).
-    BENEFIT: Change the color in ONE place and it updates across the whole site.
-
-    TO CHANGE THE COLOR SCHEME:
-      Just edit these hex values. For example:
-      --accent: #1E6EBF;  would make all highlights blue instead of orange.
-  */
 
   html { scroll-behavior: smooth; }
-  /*
-    When a user clicks a nav link like <a href="#about">,
-    instead of jumping instantly, the page scrolls smoothly to that section.
-  */
 
-  /* ── BODY (the main page container) ── */
   body {
-    background: var(--paper);   /* Sets the page background to warm off-white */
-    color: var(--ink);          /* Sets the default text color to near-black   */
-    font-family: var(--sans);   /* Sets the default font to DM Sans            */
-    font-weight: 300;           /* Light weight text (300 = thin, 400 = normal, 700 = bold) */
-    overflow-x: hidden;         /* Prevents horizontal scroll if anything accidentally overflows */
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
   }
 
   /* ── NOISE TEXTURE OVERLAY ── */
   body::before {
     content: '';
-    /*
-      ::before creates a decorative element BEFORE the body's content.
-      content:'' is required for pseudo-elements — even if empty.
-    */
-    position: fixed; inset: 0;
-    /*
-      position: fixed — sticks to the screen, doesn't scroll with the page.
-      inset: 0 — shorthand for top:0; right:0; bottom:0; left:0 (fills the whole screen).
-    */
-    z-index: 0;
-    /* z-index controls stacking order. 0 = behind most content. Higher = on top. */
+    position: fixed; inset: 0; z-index: 0;
     opacity: 0.035;
-    /* Very faint — 3.5% opacity. Just enough to add texture without being distracting. */
     pointer-events: none;
-    /* Makes this overlay "invisible" to clicks — clicks pass through to elements below. */
-    background-image: url("data:image/svg+xml,...");
-    /*
-      This is an inline SVG image encoded as a URL (data URI).
-      It generates a grain/noise texture using SVG's feTurbulence filter.
-      No external image file needed — it's all generated by the browser.
-    */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-size: 200px;
-    /* Tiles the 200px noise pattern across the whole screen. */
   }
 
-  /* ============================================================
-     NAVIGATION BAR
-     ============================================================ */
+  /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    /*
-      Fixed positioning: the nav bar STAYS at the top even when you scroll.
-      top/left/right: 0 — pins it to all three edges.
-    */
-    z-index: 100;
-    /* Very high z-index so nav appears on top of ALL other content. */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /*
-      Flexbox layout:
-        display:flex         — activates flexbox (side-by-side layout)
-        align-items:center   — vertically centers logo + links
-        justify-content:space-between — pushes logo to left, links to right
-    */
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 1.4rem 4rem;
-    /* 1.4rem top/bottom, 4rem left/right. rem = relative to root font size (usually 16px). */
     background: rgba(245, 242, 238, 0.88);
-    /* Semi-transparent background (88% opacity). Shows content blurring through. */
     backdrop-filter: blur(12px);
-    /* "Frosted glass" effect — blurs content BEHIND the nav bar. */
     border-bottom: 1px solid rgba(17,16,16,0.08);
-    /* Very subtle 1px line at the bottom of the nav. */
     transition: padding 0.3s;
-    /* If padding changes (e.g. on scroll), it animates over 0.3 seconds. */
   }
 
   .nav-logo {
     font-family: var(--serif);
     font-size: 1.15rem;
-    font-weight: 900;         /* Extra-bold */
-    letter-spacing: -0.02em;  /* Slightly tighter letter spacing */
+    font-weight: 900;
+    letter-spacing: -0.02em;
     color: var(--ink);
-    text-decoration: none;    /* Removes the default underline from <a> tags */
+    text-decoration: none;
   }
   .nav-logo span { color: var(--accent); }
-  /* The dot (.) in "YV." is wrapped in <span> to make it the accent color. */
 
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  /*
-    flex     — puts nav items side by side
-    gap      — space between each link
-    list-style:none — removes the bullet points from <ul>/<li>
-  */
-
   .nav-links a {
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: 500;
-    letter-spacing: 0.12em;     /* Spread letters out for an "uppercase" feel */
-    text-transform: uppercase;  /* Forces all letters to capitals */
-    color: var(--muted);        /* Starts grey */
-    transition: color 0.2s;     /* Color change animates over 0.2 seconds */
-    position: relative;         /* Needed so the ::after underline positions correctly */
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+    position: relative;
   }
-
   .nav-links a::after {
-    /*
-      Creates an animated underline that slides in on hover.
-      This is a common CSS trick using ::after pseudo-element.
-    */
     content: '';
     position: absolute; left: 0; bottom: -3px;
-    width: 0;           /* Starts with zero width — invisible */
-    height: 1.5px;
+    width: 0; height: 1.5px;
     background: var(--accent);
-    transition: width 0.25s;   /* Width change animates — creates "slide in" effect */
+    transition: width 0.25s;
   }
-  .nav-links a:hover { color: var(--ink); }          /* Text turns black on hover */
-  .nav-links a:hover::after { width: 100%; }         /* Underline slides to full width */
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
 
-  /* ── HAMBURGER MENU (mobile only) ── */
+  /* Hamburger */
   .hamburger {
-    display: none;          /* HIDDEN on desktop. Shown only on mobile via @media query. */
+    display: none;
     flex-direction: column; gap: 5px;
     cursor: pointer; background: none; border: none; padding: 4px;
   }
@@ -222,35 +90,24 @@
     display: block; width: 24px; height: 1.5px;
     background: var(--ink);
     transition: transform 0.3s, opacity 0.3s;
-    /* Each span is one horizontal line of the hamburger icon. */
   }
-  /* 
-    When .hamburger has class "open" (added by JavaScript),
-    the 3 lines animate into an X (close icon):
-  */
   .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  /* First line: moves down 6.5px then rotates 45° to form top of X */
   .hamburger.open span:nth-child(2) { opacity: 0; }
-  /* Middle line: fades out */
   .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-  /* Last line: moves up 6.5px then rotates -45° to form bottom of X */
 
-  /* ── FULLSCREEN MOBILE MENU ── */
+  /* Mobile menu */
   .mobile-menu {
     display: none;
     position: fixed; inset: 0; z-index: 99;
-    /* Covers the ENTIRE screen, below the nav bar (z-index 99 vs nav's 100) */
     background: var(--paper);
     flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
     opacity: 0; pointer-events: none;
-    /* Starts invisible and non-interactive */
     transition: opacity 0.3s;
   }
   .mobile-menu.open { opacity: 1; pointer-events: all; }
-  /* When JS adds class "open", it fades in and becomes clickable */
   .mobile-menu a {
     font-family: var(--serif);
-    font-size: 2.5rem;      /* BIG links for easy tapping on mobile */
+    font-size: 2.5rem;
     font-style: italic;
     color: var(--ink);
     text-decoration: none;
@@ -258,44 +115,31 @@
   }
   .mobile-menu a:hover { color: var(--accent); }
 
-  /* ============================================================
-     HERO SECTION (the big first screen)
-     ============================================================ */
+  /* ── HERO ── */
   #hero {
     min-height: 100vh;
-    /*
-      100vh = 100% of the viewport height.
-      min-height means it's AT LEAST full screen, but can grow taller if needed.
-    */
     display: grid;
     place-items: center;
-    /* CSS Grid shorthand to perfectly center the content both horizontally & vertically */
     padding: 8rem 4rem 5rem;
-    /* top:8rem (clears the fixed nav), sides:4rem, bottom:5rem */
     position: relative;
-    /* Needed so absolutely-positioned children (the decorative lines) stay inside */
     overflow: hidden;
   }
 
-  /* Decorative crosshair lines behind the hero text */
   .hero-line {
-    position: absolute;     /* Pulled out of normal flow, positioned relative to #hero */
+    position: absolute;
     background: var(--ink);
-    opacity: 0.07;          /* Very faint — purely decorative */
+    opacity: 0.07;
   }
   .hero-line-h { height: 1px; left: 0; right: 0; top: 50%; }
-  /* Horizontal line stretching full width, sitting at vertical center */
   .hero-line-v { width: 1px; top: 0; bottom: 0; left: 40%; }
-  /* Vertical line stretching full height, at 40% from the left */
 
   .hero-inner {
-    max-width: 900px;       /* Content never gets wider than 900px on large screens */
-    width: 100%;            /* On smaller screens, takes full available width */
+    max-width: 900px;
+    width: 100%;
     position: relative;
-    z-index: 1;             /* Sits on top of the decorative lines (z-index: 0) */
+    z-index: 1;
   }
 
-  /* Small tag above the main heading */
   .hero-eyebrow {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
@@ -303,65 +147,46 @@
     color: var(--accent);
     font-weight: 500;
     margin-bottom: 1.5rem;
-    /* ── ENTRANCE ANIMATION ── */
-    opacity: 0;                     /* Starts invisible */
-    transform: translateY(16px);    /* Starts 16px below its final position */
+    opacity: 0;
+    transform: translateY(16px);
     animation: rise 0.7s 0.2s forwards;
-    /*
-      animation: [name] [duration] [delay] [fill-mode]
-        name: "rise" — refers to @keyframes rise defined later
-        0.7s: takes 0.7 seconds to complete
-        0.2s: WAITS 0.2 seconds before starting (stagger effect)
-        forwards: keeps the final state (stays visible after animating in)
-    */
   }
 
   h1 {
     font-family: var(--serif);
     font-size: clamp(3.5rem, 9vw, 7.5rem);
-    /*
-      clamp(min, preferred, max) — responsive font sizing:
-        min: never smaller than 3.5rem (on tiny screens)
-        preferred: 9vw = 9% of viewport width (scales with screen)
-        max: never bigger than 7.5rem (on huge screens)
-    */
     font-weight: 900;
-    line-height: 0.95;       /* Tighter than normal — lines sit very close together */
-    letter-spacing: -0.03em; /* Slightly condensed letter spacing for large text */
+    line-height: 0.95;
+    letter-spacing: -0.03em;
     margin-bottom: 2rem;
     opacity: 0;
     transform: translateY(20px);
-    animation: rise 0.7s 0.4s forwards;  /* Animates in 0.4s after page load (staggered) */
+    animation: rise 0.7s 0.4s forwards;
   }
 
   h1 em {
-    font-style: italic;      /* The <em> tag makes text italic */
-    color: var(--accent);    /* Surname turns accent color */
-    display: block;          /* Forces it onto its own line */
+    font-style: italic;
+    color: var(--accent);
+    display: block;
   }
 
   .hero-sub {
     font-size: 1rem;
-    line-height: 1.7;         /* Comfortable reading spacing between lines */
-    color: var(--muted);      /* Grey — visually secondary to the h1 */
+    line-height: 1.7;
+    color: var(--muted);
     max-width: 440px;
     margin-bottom: 3rem;
     opacity: 0;
     transform: translateY(16px);
-    animation: rise 0.7s 0.6s forwards;  /* Third element to animate in (0.6s delay) */
+    animation: rise 0.7s 0.6s forwards;
   }
 
   .hero-cta {
     display: inline-flex; gap: 1rem; flex-wrap: wrap;
-    /*
-      inline-flex: flex container that only takes up as much width as its children
-      flex-wrap:wrap: if buttons don't fit side-by-side, they wrap to a new line
-    */
     opacity: 0;
-    animation: rise 0.7s 0.8s forwards;  /* Last element to animate in (0.8s delay) */
+    animation: rise 0.7s 0.8s forwards;
   }
 
-  /* ── BUTTONS ── */
   .btn {
     display: inline-block;
     padding: 0.85rem 2rem;
@@ -369,57 +194,42 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    text-decoration: none;          /* Removes link underline */
-    border: 1.5px solid var(--ink); /* Outline border */
+    text-decoration: none;
+    border: 1.5px solid var(--ink);
     transition: background 0.25s, color 0.25s, transform 0.2s;
     cursor: pointer;
     font-family: var(--sans);
-    /*
-      Note: no background set here — it's transparent by default.
-      Specific button types (.btn-primary, .btn-outline) override this.
-    */
   }
   .btn-primary { background: var(--ink); color: var(--paper); }
-  /* Filled dark button */
   .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
-  /* On hover: turns accent red, and "lifts" 2px upward — subtle interaction feel */
   .btn-outline:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
-  /* Outline button fills in on hover */
 
-  /* ── SCROLL HINT (bottom of hero) ── */
   .scroll-hint {
     position: absolute; bottom: 2.5rem; left: 50%;
     transform: translateX(-50%);
-    /*
-      left:50% moves it to the center of the page,
-      translateX(-50%) then shifts it LEFT by half its own width.
-      Combined: perfectly centered horizontally.
-    */
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     opacity: 0;
-    animation: rise 0.7s 1.2s forwards; /* Animates in last, after all hero content */
+    animation: rise 0.7s 1.2s forwards;
   }
   .scroll-hint span {
-    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
   .scroll-line {
     width: 1px; height: 40px;
     background: linear-gradient(to bottom, var(--muted), transparent);
-    /* Gradient line: solid at top, fades to invisible at bottom — arrow-like feel */
     animation: scrollPulse 2s 1.5s infinite;
-    /* Repeats forever (infinite) to draw attention to scroll action */
   }
 
-  /* ============================================================
-     SHARED SECTION STYLES
-     ============================================================ */
+  /* ── SECTION COMMONS ── */
   section { position: relative; z-index: 1; }
-  /* Each section stacks above the body::before noise texture (z-index:0) */
 
   .section-inner {
     max-width: 1100px;
-    margin: 0 auto;    /* auto left/right margin = horizontally centered */
-    padding: 0 4rem;   /* Side padding so content doesn't touch screen edges */
+    margin: 0 auto;
+    padding: 0 4rem;
   }
 
   .section-label {
@@ -429,12 +239,11 @@
     color: var(--accent);
     font-weight: 500;
     margin-bottom: 0.8rem;
-    /* Small "01 — About Me" tag shown above each section heading */
   }
 
   h2 {
     font-family: var(--serif);
-    font-size: clamp(2.2rem, 5vw, 3.8rem); /* Responsive, same clamp trick as h1 */
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
     font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.025em;
@@ -444,72 +253,85 @@
     width: 100%; height: 1px;
     background: var(--ink);
     opacity: 0.1;
-    /* A very faint horizontal line between sections */
+    margin: 0;
   }
 
-  /* ============================================================
-     ABOUT SECTION
-     ============================================================ */
+  /* ── ABOUT ── */
   #about {
-    padding: 8rem 0;           /* Generous top/bottom whitespace */
-    background: var(--warm);   /* Slightly different background to visually separate sections */
+    padding: 8rem 0;
+    background: var(--warm);
   }
 
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1.1fr;
-    /*
-      Creates a 2-column layout.
-      1fr = "1 fraction unit", 1.1fr = slightly wider.
-      The text column is 10% wider than the portrait column.
-    */
-    gap: 6rem;          /* Space between the two columns */
-    align-items: start; /* Columns align to their top edges */
+    gap: 6rem;
+    align-items: start;
     margin-top: 4rem;
   }
 
   .about-portrait {
-    aspect-ratio: 3/4;  /* Portrait shape (taller than wide) — like a photo card */
+    aspect-ratio: 3/4;
     background: var(--ink);
     position: relative;
     overflow: hidden;
-    /* overflow:hidden clips the ::after decorative border within bounds */
   }
 
-  /* Decorative offset border behind the portrait */
+  .about-portrait-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1rem;
+    background: linear-gradient(145deg, #1e1d1c 0%, #2e2b28 100%);
+  }
+
+  .portrait-icon {
+    width: 64px; height: 64px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .portrait-icon svg { opacity: 0.3; }
+
+  .portrait-note {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* Corner decoration */
   .about-portrait::after {
     content: '';
     position: absolute; bottom: -12px; right: -12px;
-    /* Positioned 12px below and to the right of the portrait box */
     width: 80%; height: 80%;
     border: 1.5px solid var(--accent);
-    z-index: -1;  /* Sits BEHIND the portrait */
+    z-index: -1;
     pointer-events: none;
   }
 
   .about-text h2 { margin-bottom: 1.8rem; }
+
   .about-text p {
     font-size: 1rem;
-    line-height: 1.85;   /* Very comfortable reading line height */
-    color: #3a3835;      /* Slightly warm dark tone — easier to read than pure black */
+    line-height: 1.85;
+    color: #3a3835;
     margin-bottom: 1.2rem;
   }
 
   .about-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* 3 equal columns for the 3 stat blocks */
     gap: 1.5rem;
     margin-top: 3rem;
     padding-top: 2.5rem;
-    border-top: 1px solid rgba(17,16,16,0.1); /* Separator line above stats */
+    border-top: 1px solid rgba(17,16,16,0.1);
   }
 
   .stat-num {
     font-family: var(--serif);
     font-size: 2.4rem;
     font-weight: 900;
-    color: var(--accent);   /* Big accent-colored numbers */
+    color: var(--accent);
     line-height: 1;
   }
   .stat-label {
@@ -520,45 +342,31 @@
     margin-top: 0.4rem;
   }
 
-  /* ============================================================
-     WORK / EXPERIENCE SECTION
-     ============================================================ */
+  /* ── WORK ── */
   #work { padding: 8rem 0; }
 
   .work-header {
     display: flex;
-    align-items: flex-end;       /* Aligns heading and button to their bottom edges */
+    align-items: flex-end;
     justify-content: space-between;
     margin-bottom: 4rem;
-    flex-wrap: wrap; gap: 1.5rem;
-    /* flex-wrap: if items don't fit side-by-side, they stack vertically on small screens */
+    flex-wrap: wrap;
+    gap: 1.5rem;
   }
 
-  /* ── GALLERY / CARD GRID ── */
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    /*
-      12-column grid — a classic layout system (like Bootstrap's grid).
-      Each card can "span" multiple columns to create varied sizes.
-      e.g. span 7 = takes 7 of 12 columns = just over half-width.
-    */
     gap: 1.5rem;
   }
 
   .gallery-item {
-    position: relative;  /* Needed for the overlay (position:absolute) to work */
-    overflow: hidden;    /* Clips the overlay within the card's boundaries */
+    position: relative;
+    overflow: hidden;
     cursor: pointer;
     background: var(--warm);
   }
 
-  /* 
-    Column spans for each card — creating an asymmetric editorial layout:
-    Row 1: [7 cols = large] [5 cols = medium]
-    Row 2: [4 cols] [4 cols] [4 cols]
-    Row 3: [6 cols] [6 cols]
-  */
   .gallery-item:nth-child(1) { grid-column: span 7; }
   .gallery-item:nth-child(2) { grid-column: span 5; }
   .gallery-item:nth-child(3) { grid-column: span 4; }
@@ -568,7 +376,7 @@
   .gallery-item:nth-child(7) { grid-column: span 6; }
 
   .gallery-placeholder {
-    aspect-ratio: 4/3;  /* Cards maintain a 4:3 ratio (landscape) */
+    aspect-ratio: 4/3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -576,390 +384,335 @@
     gap: 1rem;
     background: linear-gradient(135deg, var(--warm) 0%, #d9d3c8 100%);
     transition: background 0.3s;
-    /*
-      These are the colored card backgrounds.
-      TO ADD YOUR OWN IMAGE: replace the background gradient with:
-        background: url('your-image.jpg') center/cover no-repeat;
-      And remove the placeholder icon and text inside.
-    */
   }
 
-  /* ── HOVER OVERLAY (dark overlay that slides up on hover) ── */
+  .gallery-item:nth-child(odd) .gallery-placeholder {
+    background: linear-gradient(135deg, #e2dbd0 0%, #cbc4b8 100%);
+  }
+
+  .gallery-icon {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(17,16,16,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gallery-icon svg { opacity: 0.3; }
+
+  .gallery-placeholder-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
   .gallery-overlay {
     position: absolute; inset: 0;
-    /* Covers the entire card */
-    background: rgba(17,16,16,0.85);  /* Semi-transparent dark overlay */
+    background: rgba(17,16,16,0.85);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;  /* Pushes title text to the bottom of the card */
+    justify-content: flex-end;
     padding: 1.8rem;
-    opacity: 0;               /* Invisible by default */
-    transform: translateY(8px); /* Slightly below its final position */
-    transition: opacity 0.3s, transform 0.3s;  /* Smooth fade + slide */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
   }
+
   .gallery-item:hover .gallery-overlay {
-    opacity: 1;             /* Visible on hover */
-    transform: translateY(0);   /* Slides to normal position */
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .gallery-cat {
-    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 0.4rem;
-    /* Small category label above the card title */
-  }
-  .gallery-title {
-    font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--paper);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
   }
 
+  .gallery-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--paper);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 8rem 0;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  #contact .section-label { color: #C8472B; }
+
+  #contact h2 {
+    color: var(--paper);
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 1rem;
+    color: rgba(245,242,238,0.5);
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 4rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-group label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,242,238,0.4);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(245,242,238,0.2);
+    padding: 0.75rem 0;
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.25s;
+    resize: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(245,242,238,0.2); }
+
+  .btn-send {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    padding: 1rem 2rem;
+    background: var(--accent);
+    border: none;
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.2s;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+  .btn-send:hover { background: #a83720; transform: translateY(-2px); }
+  .btn-send svg { transition: transform 0.25s; }
+  .btn-send:hover svg { transform: translateX(4px); }
+
+  .contact-info { padding-top: 0.5rem; }
+
+  .contact-detail {
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(245,242,238,0.08);
+  }
+  .contact-detail:first-child { border-top: 1px solid rgba(245,242,238,0.08); }
+
+  .contact-detail-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,242,238,0.35);
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-detail-value {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--paper);
+  }
+
+  .social-row {
+    display: flex; gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .social-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,242,238,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  .social-link:hover { color: var(--paper); border-bottom-color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0c0b0a;
+    color: rgba(245,242,238,0.25);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
   /* ── SKILLS TAGS ── */
-  .skills-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .skills-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+  }
   .tag {
     display: inline-block;
     padding: 0.45rem 1rem;
     border: 1px solid rgba(17,16,16,0.18);
-    font-size: 0.75rem; font-weight: 400; letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
     color: var(--muted);
     background: var(--warm);
     transition: background 0.2s, color 0.2s, border-color 0.2s;
     cursor: default;
   }
   .tag:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  /* Tags invert (white text on dark) when hovered */
 
-  /* ============================================================
-     CONTACT SECTION
-     ============================================================ */
-  #contact {
-    padding: 8rem 0;
-    background: var(--ink);   /* Dark section — inverts the color scheme */
-    color: var(--paper);
-  }
 
-  #contact .section-label { color: #C8472B; }
-  /* Section label stays accent-colored even on dark background */
-
-  #contact h2 { color: var(--paper); margin-bottom: 1rem; }
-
-  .contact-sub {
-    font-size: 1rem; color: rgba(245,242,238,0.5); /* Muted white text */
-    max-width: 420px; line-height: 1.7; margin-bottom: 4rem;
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;  /* Two equal columns: form | contact info */
-    gap: 5rem;
-    align-items: start;
-  }
-
-  /* ── CONTACT FORM ── */
-  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
-  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-  .form-group label {
-    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(245,242,238,0.4);  /* Faint white label */
-  }
-
-  .form-group input, .form-group textarea {
-    background: transparent;    /* No background — sits on the dark section */
-    border: none;
-    border-bottom: 1px solid rgba(245,242,238,0.2);  /* Only a bottom line (underline style) */
-    padding: 0.75rem 0;
-    color: var(--paper);        /* White text as user types */
-    font-family: var(--sans); font-size: 0.95rem; font-weight: 300;
-    outline: none;              /* Removes browser's default blue focus ring */
-    transition: border-color 0.25s;
-    resize: none;               /* Prevents textarea from being manually resized */
-  }
-  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
-  /* Underline turns accent-red when field is active/focused */
-  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(245,242,238,0.2); }
-  /* Placeholder text is very faint */
-
-  .btn-send {
-    display: inline-flex; align-items: center; gap: 0.7rem;
-    padding: 1rem 2rem;
-    background: var(--accent);  /* Accent-red filled button */
-    border: none; color: var(--paper);
-    font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.25s, transform 0.2s;
-    margin-top: 0.5rem;
-    align-self: flex-start;  /* Button only as wide as its content (doesn't stretch) */
-  }
-  .btn-send:hover { background: #a83720; transform: translateY(-2px); }
-  /* Darker red + lift on hover */
-  .btn-send svg { transition: transform 0.25s; }
-  .btn-send:hover svg { transform: translateX(4px); }
-  /* Arrow icon slides right on hover — subtle interaction cue */
-
-  /* ── CONTACT INFO (right column) ── */
-  .contact-detail {
-    padding: 2rem 0;
-    border-bottom: 1px solid rgba(245,242,238,0.08);  /* Very subtle separator line */
-  }
-  .contact-detail:first-child { border-top: 1px solid rgba(245,242,238,0.08); }
-  .contact-detail-label {
-    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(245,242,238,0.35); margin-bottom: 0.5rem;
-  }
-  .contact-detail-value {
-    font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--paper);
-  }
-
-  .social-row { display: flex; gap: 1.5rem; margin-top: 3rem; }
-  .social-link {
-    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(245,242,238,0.4); text-decoration: none;
-    transition: color 0.2s;
-    border-bottom: 1px solid transparent; padding-bottom: 2px;
-  }
-  .social-link:hover { color: var(--paper); border-bottom-color: var(--accent); }
-
-  /* ============================================================
-     SCROLL REVEAL ANIMATION SYSTEM
-     All elements with class="reveal" start hidden and fade in
-     when they enter the viewport (handled by JavaScript below).
-     ============================================================ */
   .reveal {
     opacity: 0;
-    transform: translateY(28px);  /* Starts 28px below final position */
+    transform: translateY(28px);
     transition: opacity 0.7s, transform 0.7s;
   }
   .reveal.visible {
     opacity: 1;
     transform: translateY(0);
-    /*
-      When JavaScript detects the element is visible on screen,
-      it adds the class "visible", triggering this transition.
-    */
   }
 
-  /* ============================================================
-     KEYFRAME ANIMATIONS
-     @keyframes defines animation sequences referenced by name.
-     ============================================================ */
+  /* ── KEYFRAMES ── */
   @keyframes rise {
     to { opacity: 1; transform: translateY(0); }
-    /*
-      "from" is omitted — it uses the element's existing starting state
-      (opacity:0, translateY offset set inline on each element).
-      "to" is the final state: fully visible, no offset.
-    */
   }
-
   @keyframes scrollPulse {
     0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50%       { opacity: 1;   transform: scaleY(1.2); }
-    /* The scroll indicator line pulses: faint → bright → faint, repeating */
+    50% { opacity: 1; transform: scaleY(1.2); }
   }
 
-  /* ============================================================
-     RESPONSIVE DESIGN — @media queries
-     These override styles when the screen is smaller than the
-     specified breakpoint width.
-     ============================================================ */
-
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    /* Tablet and large phone layout */
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: flex; }
 
-    nav { padding: 1.2rem 2rem; }   /* Less side padding on smaller screens */
-    .nav-links { display: none; }   /* HIDE the desktop nav links */
-    .hamburger { display: flex; }   /* SHOW the hamburger icon instead */
-    .mobile-menu { display: flex; } /* Enable the fullscreen mobile menu */
+    #hero { padding: 7rem 2rem 4rem; }
 
-    #hero { padding: 7rem 2rem 4rem; }  /* Less padding in hero */
-    .section-inner { padding: 0 2rem; } /* Less side padding in all sections */
+    .section-inner { padding: 0 2rem; }
 
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    /* Stack about content: portrait on top, text below (1 column instead of 2) */
-    .about-portrait { max-width: 320px; }   /* Limit portrait width when stacked */
-    .about-portrait::after { display: none; } /* Hide decorative border (looks odd when stacked) */
+    .about-portrait { max-width: 320px; }
+    .about-portrait::after { display: none; }
 
     .gallery-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-    /* 2-column gallery instead of 12-column */
-    .gallery-item:nth-child(n) { grid-column: span 1; }  /* All items = 1 column wide */
-    .gallery-item:nth-child(1) { grid-column: span 2; }  /* Except first item = full width */
+    .gallery-item:nth-child(n) { grid-column: span 1; }
+    .gallery-item:nth-child(1) { grid-column: span 2; }
 
     .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-    /* Stack contact form and info vertically */
+
+    .about-stats { grid-template-columns: repeat(3,1fr); }
   }
 
   @media (max-width: 560px) {
-    /* Small phone layout */
-
     h1 { font-size: clamp(2.8rem, 14vw, 4.5rem); }
-    /* Smaller font range for very small screens */
-    
     .gallery-grid { grid-template-columns: 1fr; }
     .gallery-item:nth-child(n) { grid-column: span 1; }
-    /* Single column on small phones */
-    
     .about-stats { grid-template-columns: 1fr 1fr; }
-    /* 2 stats per row instead of 3 */
-    
     .social-row { flex-wrap: wrap; }
-    /* Social links wrap to next line if they don't fit */
   }
-
 </style>
 </head>
-
 <body>
-<!-- 
-  <body> contains all visible page content.
-  Everything the user sees is placed here.
--->
 
-<!-- ============================================================
-     NAVIGATION BAR
-     ============================================================ -->
+<!-- NAV -->
 <nav>
-  <!-- Logo — links back to top of page -->
   <a href="#hero" class="nav-logo">YV<span>.</span></a>
-  <!--
-    href="#hero" — scrolls to the element with id="hero"
-    The <span> wraps the dot so CSS can color it separately.
-    TO CHANGE: Replace "YV" with your own initials.
-  -->
-
-  <!-- Desktop navigation links (hidden on mobile) -->
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#contact">Contact</a></li>
-    <!--
-      Each href="#sectionid" scrolls to the matching <section id="...">
-      TO ADD A NEW PAGE SECTION: Add a <li> here and create a matching section below.
-    -->
   </ul>
-
-  <!-- Hamburger button (visible only on mobile, via CSS) -->
   <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span>  <!-- Line 1 of hamburger icon -->
-    <span></span>  <!-- Line 2 — hidden when "open" -->
-    <span></span>  <!-- Line 3 -->
-    <!-- aria-label="Menu" helps screen readers announce this button's purpose -->
+    <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- Fullscreen mobile menu overlay -->
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about" class="menu-link">About</a>
   <a href="#work" class="menu-link">Work</a>
   <a href="#contact" class="menu-link">Contact</a>
-  <!-- class="menu-link" is used by JS to close the menu when a link is clicked -->
 </div>
 
-
-<!-- ============================================================
-     HERO SECTION — First screen visitors see
-     ============================================================ -->
+<!-- HERO -->
 <section id="hero">
-  <!-- id="hero" allows: nav links to scroll here + JS/CSS to target it -->
-
-  <!-- Decorative background lines (purely visual) -->
-  <div class="hero-line hero-line-h"></div>  <!-- Horizontal line at 50% height -->
-  <div class="hero-line hero-line-v"></div>  <!-- Vertical line at 40% width -->
+  <div class="hero-line hero-line-h"></div>
+  <div class="hero-line hero-line-v"></div>
 
   <div class="hero-inner">
-    <!-- Small label above name -->
     <p class="hero-eyebrow">Mechanical Engineer &amp; Robotics Specialist</p>
-    <!--
-      &amp; is HTML for the & character.
-      In HTML, & starts special codes, so we write &amp; to show a literal &.
-      Similarly: &lt; = <, &gt; = >, &quot; = "
-    -->
-
-    <!-- Main heading: the largest text on the page -->
     <h1>Yogeshkumar<br><em>Vasava</em></h1>
-    <!--
-      <br> = line break — forces "Vasava" onto a new line.
-      <em> = emphasis — applies italic style + accent color (via CSS h1 em rule).
-      TO CHANGE: Replace the name. Keep <br> and <em> in the same positions.
-    -->
-
-    <!-- Short bio / tagline -->
     <p class="hero-sub">B.E. Mechanical Engineering graduate with hands-on expertise in FANUC robotics, CNC operations, and CAD/CAM. Seeking an entry-level role in technology-driven production environments.</p>
-
-    <!-- Call-to-action buttons -->
     <div class="hero-cta">
       <a href="#work" class="btn btn-primary">View Work</a>
       <a href="#contact" class="btn btn-outline">Get in Touch</a>
-      <!--
-        Both are <a> tags styled to look like buttons using CSS.
-        .btn-primary = dark filled button
-        .btn-outline  = border-only button
-      -->
     </div>
   </div>
 
-  <!-- Animated scroll indicator at the bottom of hero -->
   <div class="scroll-hint">
     <span>Scroll</span>
     <div class="scroll-line"></div>
-    <!-- The CSS scrollPulse animation makes this line pulse up and down -->
   </div>
 </section>
 
-<!-- Thin horizontal divider line between sections -->
 <div class="divider"></div>
 
-
-<!-- ============================================================
-     ABOUT SECTION
-     ============================================================ -->
+<!-- ABOUT -->
 <section id="about">
   <div class="section-inner">
-    <!-- "reveal" class enables the scroll-triggered fade-in animation -->
     <p class="section-label reveal">01 — About Me</p>
-
     <div class="about-grid">
-
-      <!-- Left column: portrait placeholder -->
       <div class="reveal">
         <div class="about-portrait">
           <div class="about-portrait-placeholder">
-            <!-- Placeholder content shown until you add a real photo -->
             <div class="portrait-icon">
-              <!-- Inline SVG icon (person silhouette) -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
-                <circle cx="12" cy="8" r="4"/>          <!-- Head circle -->
-                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/> <!-- Shoulder curve -->
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
               </svg>
             </div>
             <span class="portrait-note">Photo Placeholder</span>
-            <!--
-              TO ADD YOUR PHOTO:
-              1. Delete everything inside <div class="about-portrait">...</div>
-              2. Add: <img src="your-photo.jpg" alt="Yogeshkumar Vasava" style="width:100%;height:100%;object-fit:cover;">
-              object-fit:cover makes it fill the box without stretching.
-            -->
           </div>
         </div>
       </div>
 
-      <!-- Right column: bio and stats -->
       <div class="about-text reveal" style="transition-delay:0.15s">
-        <!--
-          style="transition-delay:0.15s" — this element animates in 0.15s
-          AFTER the portrait (stagger effect within the same section).
-        -->
         <h2>Engineering precision &amp; robotic excellence</h2>
-
         <p>I'm a Mechanical Engineering graduate from R.N.G. Patel Institute of Technology, Bardoli (GTU), with a CGPA of 7.44 and a specialization in 3D Printing. Currently pursuing a Post Graduation Programme in Automotive Manufacturing at iACE, Gandhinagar.</p>
-
-        <p>My hands-on training spans FANUC robotic programming (Pick &amp; Place, TP programs), RoboGuide simulation, CNC milling &amp; turning, lean manufacturing, and CAD tools including SolidWorks and AutoCAD.</p>
-
+        <p>My hands-on training spans FANUC robotic programming (Pick &amp; Place, TP programs), RoboGuide simulation, CNC milling &amp; turning, lean manufacturing, and CAD tools including SolidWorks and AutoCAD. I bring shop-floor discipline and a strong problem-solving mindset to every project.</p>
         <p>Outside the workshop, I enjoy video editing for technical documentation and creating graphic layouts — blending my engineering precision with a creative eye.</p>
 
-        <!-- Three key stats displayed in a grid -->
         <div class="about-stats">
           <div>
             <div class="stat-num">7.44</div>
             <div class="stat-label">CGPA (B.E.)</div>
-            <!-- TO CHANGE: Edit the number and label text -->
           </div>
           <div>
             <div class="stat-num">3+</div>
@@ -971,21 +724,15 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-
-<!-- ============================================================
-     WORK / EXPERIENCE SECTION
-     ============================================================ -->
+<!-- WORK -->
 <section id="work">
   <div class="section-inner">
-
-    <!-- Section header with label, heading, and CTA button -->
     <div class="work-header reveal">
       <div>
         <p class="section-label">02 — My Work &amp; Skills</p>
@@ -994,29 +741,20 @@
       <a href="#contact" class="btn btn-outline" style="margin-bottom:0.5rem">Hire Me →</a>
     </div>
 
-    <!-- Grid of experience/skill cards -->
+    <!-- Internships as project cards -->
     <div class="gallery-grid">
-
-      <!-- ── CARD 1: FANUC Robotics (spans 7 of 12 columns = large) ── -->
       <div class="gallery-item reveal" style="grid-column:span 7">
         <div class="gallery-placeholder" style="aspect-ratio:16/9; flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:2rem; background:linear-gradient(135deg,#1a2235 0%,#2c3e55 100%);">
-          <!--
-            The background gradient gives each card its unique dark color.
-            TO REPLACE WITH AN IMAGE:
-              Change the style to: background:url('robot.jpg') center/cover no-repeat;
-          -->
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Robotics &amp; Automation</span>
-          <span style="font-family:var(--serif);font-size:1.4rem;color:#F5F2EE;font-style:italic;">FANUC Robot Programming</span>
+          <span style="font-family:var(--serif);font-size:1.4rem;color:#F5F2EE;font-style:italic;line-height:1.2;">FANUC Robot Programming</span>
           <span style="font-size:0.8rem;color:rgba(245,242,238,0.5);margin-top:0.5rem;">Pick &amp; Place · TP Programs · RoboGuide Simulation</span>
         </div>
-        <!-- Hover overlay — shown when mouse hovers over the card -->
         <div class="gallery-overlay">
           <span class="gallery-cat">iACE, Gandhinagar — PG Programme</span>
           <span class="gallery-title">Robotic Programming for FANUC &amp; PANASONIC Welding</span>
         </div>
       </div>
 
-      <!-- ── CARD 2: CNC Operations (spans 5 of 12 columns) ── -->
       <div class="gallery-item reveal" style="grid-column:span 5;transition-delay:0.1s">
         <div class="gallery-placeholder" style="aspect-ratio:4/3; flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:1.6rem; background:linear-gradient(135deg,#2a1a10 0%,#4a2e1a 100%);">
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">CNC Operations</span>
@@ -1029,7 +767,6 @@
         </div>
       </div>
 
-      <!-- ── CARD 3: CAD Skills (4 of 12) ── -->
       <div class="gallery-item reveal" style="grid-column:span 4;transition-delay:0.05s">
         <div class="gallery-placeholder" style="flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:1.4rem; background:linear-gradient(135deg,#0f2318 0%,#1e3d2a 100%);">
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#6dbf81;margin-bottom:0.4rem;">Design &amp; CAD</span>
@@ -1042,7 +779,6 @@
         </div>
       </div>
 
-      <!-- ── CARD 4: Lean Manufacturing (4 of 12) ── -->
       <div class="gallery-item reveal" style="grid-column:span 4;transition-delay:0.1s">
         <div class="gallery-placeholder" style="flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:1.4rem; background:linear-gradient(135deg,#1f1a2e 0%,#35285a 100%);">
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#a78bfa;margin-bottom:0.4rem;">Manufacturing</span>
@@ -1055,7 +791,6 @@
         </div>
       </div>
 
-      <!-- ── CARD 5: Industrial Engg (4 of 12) ── -->
       <div class="gallery-item reveal" style="grid-column:span 4;transition-delay:0.15s">
         <div class="gallery-placeholder" style="flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:1.4rem; background:linear-gradient(135deg,#1e1210 0%,#3d2218 100%);">
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Industrial Engg</span>
@@ -1068,7 +803,6 @@
         </div>
       </div>
 
-      <!-- ── CARD 6: Achievement (6 of 12) ── -->
       <div class="gallery-item reveal" style="grid-column:span 6;transition-delay:0.05s">
         <div class="gallery-placeholder" style="flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:1.6rem; background:linear-gradient(135deg,#0d1f1a 0%,#163028 100%);">
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#6dbf81;margin-bottom:0.4rem;">Achievement</span>
@@ -1081,7 +815,6 @@
         </div>
       </div>
 
-      <!-- ── CARD 7: Education (6 of 12) ── -->
       <div class="gallery-item reveal" style="grid-column:span 6;transition-delay:0.1s">
         <div class="gallery-placeholder" style="flex-direction:column; align-items:flex-start; justify-content:flex-end; padding:1.6rem; background:linear-gradient(135deg,#1a1010 0%,#2e1818 100%);">
           <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Education</span>
@@ -1093,16 +826,12 @@
           <span class="gallery-title">Specialization in 3D Printing</span>
         </div>
       </div>
+    </div>
 
-    </div><!-- /gallery-grid -->
-
-    <!-- ── SKILL TAGS BLOCK ── -->
+    <!-- Skills Tags -->
     <div class="skills-block reveal" style="margin-top:3.5rem;transition-delay:0.1s">
       <p class="section-label" style="margin-bottom:1.2rem;">Core Skills</p>
       <div class="skills-tags">
-        <!-- Each <span class="tag"> is one skill pill -->
-        <!-- TO ADD A SKILL: Copy any <span class="tag">...</span> and edit the text -->
-        <!-- TO REMOVE A SKILL: Delete the entire <span class="tag">...</span> line -->
         <span class="tag">FANUC Robot Programming</span>
         <span class="tag">RoboGuide Simulation</span>
         <span class="tag">Pick &amp; Place (TP Programs)</span>
@@ -1120,16 +849,12 @@
         <span class="tag">Graphic Design (Canva)</span>
       </div>
     </div>
-
   </div>
 </section>
 
 <div class="divider"></div>
 
-
-<!-- ============================================================
-     CONTACT SECTION
-     ============================================================ -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="section-inner">
     <p class="section-label reveal">03 — Contact</p>
@@ -1137,189 +862,96 @@
     <p class="contact-sub reveal" style="transition-delay:0.2s">Open to entry-level roles in robotics, automation, and manufacturing. Feel free to reach out for opportunities or collaborations.</p>
 
     <div class="contact-grid">
-
-      <!-- Left column: contact form -->
       <form class="contact-form reveal" style="transition-delay:0.15s" onsubmit="handleSubmit(event)">
-        <!--
-          onsubmit="handleSubmit(event)" — when the form is submitted,
-          the JavaScript function handleSubmit() runs.
-          It shows a confirmation message instead of actually sending data
-          (to send real emails, you'd need a backend service like Formspree or EmailJS).
-        -->
-
         <div class="form-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" placeholder="Jane Smith" required>
-          <!--
-            for="name" on <label> + id="name" on <input> links them:
-            clicking the label focuses the input — accessibility best practice.
-            required = browser won't submit if this field is empty.
-          -->
         </div>
-
         <div class="form-group">
           <label for="email">Email Address</label>
           <input type="email" id="email" placeholder="jane@example.com" required>
-          <!-- type="email" triggers email keyboard on mobile + basic format validation -->
         </div>
-
         <div class="form-group">
           <label for="subject">Subject</label>
-          <input type="text" id="subject" placeholder="Job opportunity / Collaboration">
+          <input type="text" id="subject" placeholder="Project enquiry">
         </div>
-
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea id="message" rows="5" placeholder="Tell me about the opportunity…" required></textarea>
-          <!-- rows="5" sets the initial visible height of the textarea -->
+          <textarea id="message" rows="5" placeholder="Tell me about your project…" required></textarea>
         </div>
-
         <button type="submit" class="btn-send" id="sendBtn">
           Send Message
-          <!-- Inline SVG right-arrow icon -->
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </button>
       </form>
 
-      <!-- Right column: contact details -->
       <div class="contact-info reveal" style="transition-delay:0.3s">
-
         <div class="contact-detail">
           <div class="contact-detail-label">Email</div>
           <div class="contact-detail-value">yogeshvasava3823@gmail.com</div>
-          <!-- TO CHANGE: Replace with your email address -->
         </div>
-
         <div class="contact-detail">
           <div class="contact-detail-label">Phone</div>
           <div class="contact-detail-value">+91 93280 13823</div>
         </div>
-
         <div class="contact-detail">
           <div class="contact-detail-label">Location</div>
           <div class="contact-detail-value">Umarpada, Surat, Gujarat 394445</div>
         </div>
-
         <div class="contact-detail">
           <div class="contact-detail-label">Availability</div>
           <div class="contact-detail-value" style="color:#6dbf81">Open to opportunities</div>
-          <!-- Inline style overrides the white color — makes availability text green -->
         </div>
 
-        <!-- Social links -->
         <div class="social-row">
           <a href="https://linkedin.com/in/yogeshkumar-vasava" target="_blank" class="social-link">LinkedIn</a>
-          <!--
-            target="_blank" opens the link in a NEW browser tab.
-            TO ADD MORE SOCIALS: Copy this <a> tag and change the href and text.
-          -->
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
 <footer>
   <p>© 2026 Yogeshkumar Vasava — Mechanical Engineer. <a href="#hero">↑ Back to top</a></p>
-  <!--
-    © is the HTML code for the copyright symbol ©.
-    <a href="#hero"> scrolls back to the top of the page.
-    TO CHANGE THE YEAR: Update "2026".
-  -->
 </footer>
 
-
-<!-- ============================================================
-     JAVASCRIPT
-     All interactive behavior is written here, at the bottom of <body>.
-     Placing scripts here (not in <head>) ensures the HTML loads first,
-     so the JS can find and manipulate elements without errors.
-     ============================================================ -->
 <script>
-
-  // ── HAMBURGER MENU TOGGLE ──────────────────────────────────────
+  // Hamburger
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  // getElementById finds the HTML element with that id="" attribute.
-
   hamburger.addEventListener('click', () => {
-    // addEventListener waits for a 'click' event, then runs the function.
     hamburger.classList.toggle('open');
     mobileMenu.classList.toggle('open');
-    // classList.toggle('open') adds the class if absent, removes it if present.
-    // This triggers the CSS transitions for the X animation and menu fade-in.
   });
-
-  // Close the mobile menu when any link inside it is clicked
   document.querySelectorAll('.menu-link').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
-      // .remove() always removes the class (vs .toggle() which flips it).
     });
   });
-  // querySelectorAll returns ALL elements matching the CSS selector.
-  // .forEach loops through each one and attaches the click listener.
 
-
-  // ── SCROLL REVEAL ANIMATION ────────────────────────────────────
+  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
-    // IntersectionObserver watches elements and fires when they enter/exit the viewport.
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        // isIntersecting = true means the element is currently visible on screen.
-        e.target.classList.add('visible');
-        // Adding 'visible' triggers the CSS transition: opacity 0→1, translateY 28px→0.
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
-  // threshold: 0.12 means the animation fires when 12% of the element is visible.
-  // Increase to 0.5 to wait until 50% is visible before animating.
-
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  // .observe(el) tells the observer to watch this specific element.
-  // Every element with class="reveal" gets watched.
 
-
-  // ── CONTACT FORM SUBMISSION ────────────────────────────────────
+  // Form submit
   function handleSubmit(e) {
     e.preventDefault();
-    // preventDefault() stops the default form behavior (which would reload the page).
-
     const btn = document.getElementById('sendBtn');
-    btn.textContent = '✓ Message Sent!';  // Change button text
-    btn.style.background = '#2a7a45';     // Turn button green
-    btn.disabled = true;                  // Prevent double-submits
-
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = '#2a7a45';
+    btn.disabled = true;
     setTimeout(() => {
-      // setTimeout runs a function after a delay (in milliseconds).
-      // 3000ms = 3 seconds.
       btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-      btn.style.background = '';  // Reset to CSS default
-      btn.disabled = false;       // Re-enable the button
-      e.target.reset();           // Clear all form fields
+      btn.style.background = '';
+      btn.disabled = false;
+      e.target.reset();
     }, 3000);
-
-    /*
-      TO ACTUALLY SEND EMAILS:
-      Sign up at formspree.io (free), get your form endpoint URL, then replace
-      e.preventDefault() and the code below with a fetch() call:
-
-      fetch('https://formspree.io/f/YOUR_ID', {
-        method: 'POST',
-        body: new FormData(e.target),
-        headers: { 'Accept': 'application/json' }
-      });
-    */
   }
-
 </script>
 </body>
 </html>
